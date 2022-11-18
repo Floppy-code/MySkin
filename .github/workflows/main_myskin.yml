@@ -29,11 +29,10 @@ jobs:
           npm run test --if-present npm test -- --watch=false --browsers=ChromeHeadless
       
       - name: Upload artifact for deployment job
-        working-directory: ./myskin-spa/dist
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: ./myskin-spa/dist
 
   deploy:
     runs-on: ubuntu-latest
