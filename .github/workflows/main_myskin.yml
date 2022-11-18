@@ -14,6 +14,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - cd /myskin-spa
+    
       - uses: actions/checkout@v2
 
       - name: Set up Node.js version
