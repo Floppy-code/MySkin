@@ -2,12 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 
-import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
-
-
+import {MatCommonModule} from '@angular/material/core';
 
 
 @NgModule({
@@ -17,10 +16,11 @@ import {MatMenuModule} from '@angular/material/menu';
   ],
   imports: [
     CommonModule,
-    MatToolbarModule,
+    MatCommonModule,
     MatIconModule,
+    MatToolbarModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   exports: [
     NavBarComponent
