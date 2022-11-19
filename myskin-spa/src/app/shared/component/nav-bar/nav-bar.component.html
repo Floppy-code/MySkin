@@ -1,1 +1,20 @@
-<p>nav-bar works!</p>
+<p>
+    <mat-toolbar color="primary">
+      <span>MySkin</span>
+      <span class="nav-bar-spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>person icon</mat-icon>
+          <span>Admin Login</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>graphic_eq</mat-icon>
+            <span>Detect skin mark</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+  </p>
+  

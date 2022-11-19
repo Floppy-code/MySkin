@@ -4,8 +4,8 @@ import { PageNotFoundComponent } from './core/component/page-not-found/page-not-
 import { WelcomeComponent } from './core/component/welcome/welcome.component';
 
 const routes: Routes = [
-  { path: '', component: WelcomeComponent },
-  { path: '**', component: PageNotFoundComponent, pathMatch: 'full' }
+  { path: '', component: WelcomeComponent},
+  { path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
