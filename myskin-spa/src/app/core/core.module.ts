@@ -6,9 +6,16 @@ import { PageNotFoundComponent } from './component/page-not-found/page-not-found
 import { MatCommonModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [WelcomeComponent, PageNotFoundComponent],
-  imports: [CommonModule, MatCommonModule, MatCardModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatCommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDividerModule,
+  ],
 })
 export class CoreModule {}
