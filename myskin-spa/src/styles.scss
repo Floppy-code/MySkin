@@ -9,3 +9,50 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.page-title-holder {
+  display: flex;
+  justify-content: left;
+}
+
+.page-title {
+  margin-left: 10%;
+}
+
+.page-title h1 {
+  letter-spacing: 0.2rem;
+  margin: 1rem 0rem 1rem 0rem;
+}
+
+mat-card-header {
+  margin-bottom: 0.8rem;
+}
+
+.material-card-holder {
+  display: flex;
+  justify-content: center;
+}
+
+.material-card {
+  width: 80%;
+}
+
+.material-card-devider-holder {
+  margin-top: 0.4em;
+}
+
+@media (max-width: 420px) {
+  .material-card {
+    width: 95%;
+  }
+
+  .page-title {
+    margin-left: 2.5%;
+  }
+
+  .page-title h1 {
+    letter-spacing: 0.2rem;
+    margin: 1rem 0rem 1rem 0rem;
+    font-size: x-large;
+  }
+}
