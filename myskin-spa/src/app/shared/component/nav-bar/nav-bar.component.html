@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span>MySkin</span>
+  <span [routerLink]="['/']" routerLinkActive="router-link-active">MySkin</span>
   <span class="nav-bar-spacer"></span>
   <button
     mat-icon-button
@@ -9,13 +9,29 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <button
+      mat-menu-item
+      [routerLink]="['/admin']"
+      routerLinkActive="router-link-active"
+    >
       <mat-icon>person icon</mat-icon>
       <span>Admin Login</span>
     </button>
-    <button mat-menu-item>
+    <button
+      mat-menu-item
+      [routerLink]="['/detection']"
+      routerLinkActive="router-link-active"
+    >
       <mat-icon>graphic_eq</mat-icon>
-      <span>Detect skin mark</span>
+      <span>Birthmark Detection</span>
+    </button>
+    <button
+      mat-menu-item
+      [routerLink]="['/detection/history']"
+      routerLinkActive="router-link-active"
+    >
+      <mat-icon>history</mat-icon>
+      <span>Detection History</span>
     </button>
   </mat-menu>
 </mat-toolbar>

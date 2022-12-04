@@ -1,27 +1,33 @@
 <div class="page-title-holder">
   <div class="page-title">
-    <h1>Placeholder</h1>
+    <h1>Welcome Page</h1>
   </div>
 </div>
 
 <div class="material-card-holder">
   <mat-card class="material-card">
     <mat-card-header>
-      <mat-card-title>Welcome</mat-card-title>
-      <mat-card-subtitle>TEST</mat-card-subtitle>
+      <mat-card-title>Skin Cancer detection</mat-card-title>
     </mat-card-header>
     <mat-divider class="material-card-devider"></mat-divider>
     <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
     <mat-card-content>
       <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz
-        breeds of dog from Japan. A small, agile dog that copes very well with
-        mountainous terrain, the Shiba Inu was originally bred for hunting.
+        This web aplication was designed as a tool that can help with the
+        detection of potentialy dangerous birthmarks.
+        <br />
+        <br />
+        In no way does this application take on the role of a trained specialist
+        and you should always ask your doctor about potential problems affecting
+        your skin.
       </p>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>Temporary</button>
-      <button mat-button>Buttons</button>
-    </mat-card-actions>
+    <div class="material-card-actions-holder">
+      <mat-card-actions>
+        <a [routerLink]="['/detection']" routerLinkActive="router-link-active">
+          <button mat-raised-button color="primary">Continue</button>
+        </a>
+      </mat-card-actions>
+    </div>
   </mat-card>
 </div>

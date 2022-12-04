@@ -2,18 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatCommonModule} from '@angular/material/core';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCommonModule } from '@angular/material/core';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [
-    NavBarComponent,
-    
-  ],
+  declarations: [NavBarComponent],
   imports: [
     CommonModule,
     MatCommonModule,
@@ -21,9 +18,8 @@ import {MatCommonModule} from '@angular/material/core';
     MatToolbarModule,
     MatButtonModule,
     MatMenuModule,
+    RouterModule,
   ],
-  exports: [
-    NavBarComponent
-  ]
+  exports: [NavBarComponent],
 })
-export class SharedModule { }
+export class SharedModule {}
