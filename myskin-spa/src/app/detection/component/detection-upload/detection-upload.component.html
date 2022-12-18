@@ -8,13 +8,29 @@
       >
     </mat-card-header>
     <mat-divider class="material-card-devider"></mat-divider>
-    <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
     <mat-card-content>
-      <p>TODO</p>
+      <div class="dropzone-holder">
+        <ngx-dropzone
+          (change)="onSelect($event)"
+          [multiple]="false"
+          accept="image/jpeg, image/jpg"
+        >
+          <ngx-dropzone-label>Drop your image here</ngx-dropzone-label>
+          <ngx-dropzone-image-preview
+            ngProjectAs="ngx-dropzone-preview"
+            *ngFor="let f of files"
+            [file]="f"
+          >
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+          </ngx-dropzone-image-preview>
+        </ngx-dropzone>
+      </div>
     </mat-card-content>
     <div class="material-card-actions-holder">
       <mat-card-actions>
-        <button mat-raised-button color="primary">Upload</button>
+        <button mat-raised-button color="primary" (click)="uploadPhoto()">
+          Upload
+        </button>
       </mat-card-actions>
     </div>
   </mat-card>

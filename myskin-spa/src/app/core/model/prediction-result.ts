@@ -1,3 +1,3 @@
 export interface PredictionResult {
-  data?: object; //TODO
+  data?: any; //TODO
 }
