@@ -10,19 +10,22 @@ import { PredictionResult } from 'src/app/core/model/prediction-result';
 export class PredictionService {
   private backendUrl: string = '127.0.0.1:5000'; //Backend API base URL
 
-  predictionResult$: Observable<PredictionResult>;
+  predictionResult$?: Observable<PredictionResult>;
 
-  constructor(private httpClient: HttpClient) {
-    this.predictionResult$ = of({ data: 'asedawe' });
-  }
+  constructor(private httpClient: HttpClient) {}
 
-  predict(image: File): Observable<PredictionResult> {
+  public predict(image: File): void {
+    //Encode image to Base64.
     let encodedImage: PredictionEncodedFile = this.encodeFileToBase64(image);
 
-    return this.httpClient.post<PredictionResult>(
-      this.backendUrl + '/predict',
-      encodedImage
-    );
+    // //Send image to backend and await response.
+    // return this.httpClient.post<PredictionResult>(
+    //   this.backendUrl + '/predict',
+    //   encodedImage
+    // );
+
+    //Mocked output
+    this.predictionResult$ = of({ confidence: 0.6, type: 'blk' });
   }
 
   private encodeFileToBase64(file: File): PredictionEncodedFile {

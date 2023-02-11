@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { DetectionModule } from './detection/detection.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
+    CommonModule,
     SharedModule,
   ],
   providers: [],

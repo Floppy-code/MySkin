@@ -10,12 +10,19 @@ import { PredictionService } from '../../service/prediction.service';
   styleUrls: ['./detection-base.component.scss'],
 })
 export class DetectionBaseComponent {
-  private predictionResults?: Observable<PredictionResult>;
+  public predictionResult$?: Observable<PredictionResult>;
 
-  constructor(private predictionService: PredictionService) {}
+  constructor(private predictionService: PredictionService) {
+    this.predictionResult$ = this.predictionService.predictionResult$;
+  }
 
-  //TODO
-  predictFromImage(image: ImageBitmap): void {
-    return;
+  imageUploadedHandler(file: File): void {
+    console.log('Received image from child component!');
+    this.predictFromImage(file);
+  }
+
+  predictFromImage(file: File): void {
+    console.log('Prediction initiated!');
+    this.predictionService.predict(file);
   }
 }
