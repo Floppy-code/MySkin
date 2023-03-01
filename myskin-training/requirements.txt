@@ -4,3 +4,5 @@ matplotlib
 tensorflow==2.10
 opencv-python
 pandas
+imbalanced-learn
+scikit-image
