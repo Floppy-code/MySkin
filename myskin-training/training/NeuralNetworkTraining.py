@@ -1,7 +1,8 @@
 import sys
-
 import tensorflow as tf
 import numpy as np
+from utils.TrainingStatisticsUtils import save_training_statistics
+from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.layers import Input, Dense, Flatten, AveragePooling2D
 from tensorflow.keras.models import Sequential
@@ -13,11 +14,15 @@ physical_devices = tf.config.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 #===== CONSTANS =====
-FEATURE_FILE = '../resources/features.npy'
-LABEL_FILE = '../resources/labels.npy'
+#Model
 MODEL_NAME = 'resnet50'
-PREPROCESSED_FEATURE_FILE = f'../resources/{MODEL_NAME}_features.npy'
-PREPROCESSED_LABEL_FILE = f'../resources/{MODEL_NAME}_labels.npy'
+TRAINING_STATISTICS_FILE = './stats/network_training.csv'
+
+#Dataset
+FEATURE_FILE = './resources/features.npy'
+LABEL_FILE = './resources/labels.npy'
+PREPROCESSED_FEATURE_FILE = f'./resources/{MODEL_NAME}_features.npy'
+PREPROCESSED_LABEL_FILE = f'./resources/{MODEL_NAME}_labels.npy'
 
 fold = sys.argv[1]
 
@@ -44,7 +49,12 @@ for i, (train_index, test_index) in enumerate(skf.split(X, Y)):
 train_index = train_indexes[int(fold)]
 test_index = test_indexes[int(fold)]
 
+
+#===== MODEL SPACE =====
 print(f"===== CURRENT FOLD: {fold} =====")
+
+earlyStopping = EarlyStopping(monitor='val_loss',
+                              patience=5,)
 
 model = Sequential()
 resnet = ResNet50(include_top=False,
@@ -63,7 +73,11 @@ model.compile(optimizer=Adam(learning_rate=1e-3),
 model.summary()
 
 history = model.fit(X[train_index], Y[train_index],
-                      class_weight=class_weights,
-                      epochs=5,
-                      batch_size=96,
-                      validation_data=(X[test_index], Y[test_index]))
+                    class_weight=class_weights,
+                    epochs=5,
+                    batch_size=96,
+                    validation_data=(X[test_index], Y[test_index]),
+                    callbacks=[earlyStopping])
+
+save_training_statistics(TRAINING_STATISTICS_FILE, history, MODEL_NAME, fold)
+#===== MODEL SPACE =====
