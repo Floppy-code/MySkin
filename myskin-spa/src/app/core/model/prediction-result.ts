@@ -1,3 +1,4 @@
 export interface PredictionResult {
-  data?: object; //TODO
+  confidence: number;
+  type: string;
 }

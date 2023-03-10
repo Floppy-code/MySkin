@@ -4,5 +4,9 @@
   </div>
 </div>
 
-<app-detection-upload></app-detection-upload>
-<app-detection-results></app-detection-results>
+<app-detection-upload
+  (photoUploadedEvent)="imageUploadedHandler($event)"
+></app-detection-upload>
+<app-detection-results
+  [predictionResult$]="predictionResult$"
+></app-detection-results>

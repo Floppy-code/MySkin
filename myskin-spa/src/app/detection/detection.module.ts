@@ -7,7 +7,9 @@ import { DetectionHistoryComponent } from './component/detection-history/detecti
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatDividerModule,
     RouterModule,
+    NgxDropzoneModule,
+    MatTableModule,
   ],
 })
 export class DetectionModule {}
