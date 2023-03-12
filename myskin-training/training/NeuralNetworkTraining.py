@@ -15,14 +15,18 @@ tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 #===== CONSTANS =====
 #Model
-MODEL_NAME = 'resnet50'
-TRAINING_STATISTICS_FILE = './stats/network_training.csv'
+MODEL_NAME = 'resnet50_lr1e-4'
+MODEL_ARCHITECTURE_NAME = 'resnet50'
+TRAINING_STATISTICS_ACCURACY_FILE = './training/stats/network_training_acc.csv'
+TRAINING_STATISTICS_VAL_ACCURACY_FILE = './training/stats/network_training_val_acc.csv'
+TRAINING_STATISTICS_LOSS_FILE = './training/stats/network_training_loss.csv'
+TRAINING_STATISTICS_VAL_LOSS_FILE = './training/stats/network_training_val_loss.csv'
 
 #Dataset
 FEATURE_FILE = './resources/features.npy'
 LABEL_FILE = './resources/labels.npy'
-PREPROCESSED_FEATURE_FILE = f'./resources/{MODEL_NAME}_features.npy'
-PREPROCESSED_LABEL_FILE = f'./resources/{MODEL_NAME}_labels.npy'
+PREPROCESSED_FEATURE_FILE = f'./resources/{MODEL_ARCHITECTURE_NAME}_features.npy'
+PREPROCESSED_LABEL_FILE = f'./resources/{MODEL_ARCHITECTURE_NAME}_labels.npy'
 
 fold = sys.argv[1]
 
@@ -66,7 +70,7 @@ model.add(AveragePooling2D((7, 7)))
 model.add(Flatten())
 model.add(Dense(7, activation = 'softmax'))
 
-model.compile(optimizer=Adam(learning_rate=1e-3),
+model.compile(optimizer=Adam(learning_rate=1e-4),
               loss=SparseCategoricalCrossentropy(),
               metrics=['accuracy'])
 
@@ -74,10 +78,13 @@ model.summary()
 
 history = model.fit(X[train_index], Y[train_index],
                     class_weight=class_weights,
-                    epochs=5,
+                    epochs=150,
                     batch_size=96,
                     validation_data=(X[test_index], Y[test_index]),
                     callbacks=[earlyStopping])
 
-save_training_statistics(TRAINING_STATISTICS_FILE, history, MODEL_NAME, fold)
+save_training_statistics(TRAINING_STATISTICS_ACCURACY_FILE, history.history['accuracy'], MODEL_NAME, fold)
+save_training_statistics(TRAINING_STATISTICS_LOSS_FILE, history.history['loss'], MODEL_NAME, fold)
+save_training_statistics(TRAINING_STATISTICS_VAL_ACCURACY_FILE, history.history['val_accuracy'], MODEL_NAME, fold)
+save_training_statistics(TRAINING_STATISTICS_VAL_LOSS_FILE, history.history['val_loss'], MODEL_NAME, fold)
 #===== MODEL SPACE =====
