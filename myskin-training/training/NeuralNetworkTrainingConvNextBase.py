@@ -3,45 +3,45 @@ import tensorflow as tf
 import numpy as np
 from utils.TrainingStatisticsUtils import save_training_statistics
 from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.applications import ResNet50
+from tensorflow.keras.applications import ConvNeXtBase
 from tensorflow.keras.layers import Input, Dense, Flatten, AveragePooling2D
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.losses import SparseCategoricalCrossentropy 
+from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from sklearn.model_selection import StratifiedKFold
 
-physical_devices = tf.config.list_physical_devices('GPU') 
+physical_devices = tf.config.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-#===== CONSTANS =====
-#Model
-MODEL_NAME = 'resnet50_lr1e-4'
-MODEL_ARCHITECTURE_NAME = 'resnet50'
+# ===== CONSTANS =====
+# Model
+MODEL_NAME = 'ConvNextBase_lr1e-4'
+MODEL_ARCHITECTURE_NAME = 'convnextbase'
 TRAINING_STATISTICS_ACCURACY_FILE = './training/stats/network_training_acc.csv'
 TRAINING_STATISTICS_VAL_ACCURACY_FILE = './training/stats/network_training_val_acc.csv'
 TRAINING_STATISTICS_LOSS_FILE = './training/stats/network_training_loss.csv'
 TRAINING_STATISTICS_VAL_LOSS_FILE = './training/stats/network_training_val_loss.csv'
 
-#Dataset
+# Dataset
 FEATURE_FILE = './resources/features.npy'
 LABEL_FILE = './resources/labels.npy'
-PREPROCESSED_FEATURE_FILE = f'./resources/{MODEL_ARCHITECTURE_NAME}_features.npy'
-PREPROCESSED_LABEL_FILE = f'./resources/{MODEL_ARCHITECTURE_NAME}_labels.npy'
+# PREPROCESSED_FEATURE_FILE = f'./resources/{MODEL_ARCHITECTURE_NAME}_features.npy'
+# PREPROCESSED_LABEL_FILE = f'./resources/{MODEL_ARCHITECTURE_NAME}_labels.npy'
 
 fold = sys.argv[1]
 
-X = np.load(open(PREPROCESSED_FEATURE_FILE, 'rb'))
-Y = np.load(open(PREPROCESSED_LABEL_FILE, 'rb'))
+X = np.load(open(FEATURE_FILE, 'rb'))
+Y = np.load(open(LABEL_FILE, 'rb'))
 
-#Create class_weights for unbalanced dataset classes
+# Create class_weights for unbalanced dataset classes
 from sklearn.utils import class_weight
 
-class_weights = class_weight.compute_class_weight(class_weight = "balanced",
-                                                  classes = np.unique(np.squeeze(Y)),
-                                                  y = np.squeeze(Y))
+class_weights = class_weight.compute_class_weight(class_weight="balanced",
+                                                  classes=np.unique(np.squeeze(Y)),
+                                                  y=np.squeeze(Y))
 class_weights = dict(enumerate(class_weights))
 
-#Split into 5 folds evenly
+# Split into 5 folds evenly
 skf = StratifiedKFold(n_splits=5, random_state=None, shuffle=False)
 
 train_indexes = []
@@ -53,28 +53,28 @@ for i, (train_index, test_index) in enumerate(skf.split(X, Y)):
 train_index = train_indexes[int(fold)]
 test_index = test_indexes[int(fold)]
 
-
-#===== MODEL SPACE =====
+# ===== MODEL SPACE =====
 print(f"===== CURRENT FOLD: {fold} =====")
 
 earlyStopping = EarlyStopping(monitor='val_loss',
-                              patience=5,)
+                              patience=10, )
 
 model = Sequential()
-resnet = ResNet50(include_top=False,
-                  input_shape=(200, 200, 3),
-                  weights='imagenet')
-resnet.trainable = False
-model.add(resnet)
-model.add(AveragePooling2D((7, 7)))
+conv_next_base = ConvNeXtBase(include_top=False,
+                              input_shape=(200, 200, 3),
+                              weights='imagenet')
+conv_next_base.trainable = False
+
+model.add(conv_next_base)
+model.add(AveragePooling2D((6, 6)))
 model.add(Flatten())
-model.add(Dense(7, activation = 'softmax'))
+model.add(Dense(7, activation='softmax'))
 
 model.compile(optimizer=Adam(learning_rate=1e-4),
               loss=SparseCategoricalCrossentropy(),
               metrics=['accuracy'])
 
-model.summary()
+model.summary(expand_nested=True)
 
 history = model.fit(X[train_index], Y[train_index],
                     class_weight=class_weights,
