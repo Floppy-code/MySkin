@@ -10,20 +10,19 @@
     <mat-divider class="material-card-devider"></mat-divider>
     <mat-card-content>
       <div class="dropzone-holder">
-        <ngx-dropzone
-          (change)="onSelect($event)"
-          [multiple]="false"
-          accept="image/jpeg, image/jpg"
-        >
-          <ngx-dropzone-label>Drop your image here</ngx-dropzone-label>
-          <ngx-dropzone-image-preview
-            ngProjectAs="ngx-dropzone-preview"
-            *ngFor="let f of files"
-            [file]="f"
-          >
-            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-          </ngx-dropzone-image-preview>
-        </ngx-dropzone>
+        <input type="file" (change)="fileChangeEvent($event)" />
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="1 / 1"
+          format="jpeg"
+          (imageCropped)="imageCropped($event)"
+          (cropperReady)="cropperReady()"
+          (loadImageFailed)="loadImageFailed()"
+        ></image-cropper>
+      </div>
+      <div class="dropzone-holder">
+        <img src="{{ croppedImage }}" />
       </div>
     </mat-card-content>
     <div class="material-card-actions-holder">

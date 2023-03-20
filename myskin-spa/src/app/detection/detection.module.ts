@@ -10,6 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
   ],
   imports: [
     CommonModule,
+    ImageCropperModule,
     MatCardModule,
     MatButtonModule,
     MatDividerModule,

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormRecord } from '@angular/forms';
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import { Observable } from 'rxjs';
 import { PredictionEncodedFile } from 'src/app/core/model/prediction-encoded-file';
 import { PredictionService } from '../../service/prediction.service';
@@ -12,22 +13,23 @@ import { PredictionService } from '../../service/prediction.service';
 export class DetectionUploadComponent {
   @Output() photoUploadedEvent = new EventEmitter<File>();
 
-  files: File[] = [];
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
-  constructor() {}
-
-  onSelect(event: any): void {
-    console.log(event);
-    this.files.push(...event.addedFiles);
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
   }
-
-  onRemove(event: any): void {
-    console.log(event);
-    this.files.splice(this.files.indexOf(event), 1);
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
   }
-
-  uploadPhoto(): void {
-    console.log('Photo uploaded!');
-    this.photoUploadedEvent.emit(this.files[0]);
+  imageLoaded(image: LoadedImage) {
+    // show cropper
   }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
+  uploadPhoto() {}
 }
