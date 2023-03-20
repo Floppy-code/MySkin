@@ -1,10 +1,11 @@
-from tensorflow.keras.applications.resnet50 import preprocess_input
+#from tensorflow.keras.applications.resnet50 import preprocess_input
+from tensorflow.keras.applications.efficientnet_v2 import preprocess_input
 import numpy as np
 
 #===== CONSTANS =====
 FEATURE_FILE = '../resources/features.npy'
 LABEL_FILE = '../resources/labels.npy'
-MODEL_NAME = 'resnet50'
+MODEL_NAME = 'efficientnet_v2'
 PREPROCESSED_FEATURE_FILE = f'../resources/{MODEL_NAME}_features.npy'
 PREPROCESSED_LABEL_FILE = f'../resources/{MODEL_NAME}_labels.npy'
 
