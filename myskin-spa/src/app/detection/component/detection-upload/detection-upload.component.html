@@ -21,9 +21,6 @@
           (loadImageFailed)="loadImageFailed()"
         ></image-cropper>
       </div>
-      <div class="dropzone-holder">
-        <img src="{{ croppedImage }}" />
-      </div>
     </mat-card-content>
     <div class="material-card-actions-holder">
       <mat-card-actions>
@@ -32,5 +29,19 @@
         </button>
       </mat-card-actions>
     </div>
+  </mat-card>
+</div>
+
+<div class="material-card-holder">
+  <mat-card class="material-card">
+    <mat-card-header>
+      <mat-card-title>Image Preview</mat-card-title>
+    </mat-card-header>
+    <mat-divider class="material-card-devider"></mat-divider>
+    <mat-card-content>
+      <div class="dropzone-image" *ngIf="croppedImage != ''">
+        <img src="{{ croppedImage }}" />
+      </div>
+    </mat-card-content>
   </mat-card>
 </div>

@@ -16,13 +16,8 @@ export class DetectionBaseComponent {
     this.predictionResult$ = this.predictionService.predictionResult$;
   }
 
-  imageUploadedHandler(file: File): void {
+  imageUploadedHandler(base64Image: string): void {
     console.log('Received image from child component!');
-    this.predictFromImage(file);
-  }
-
-  predictFromImage(file: File): void {
-    console.log('Prediction initiated!');
-    this.predictionService.predict(file);
+    this.predictionService.predict(base64Image);
   }
 }

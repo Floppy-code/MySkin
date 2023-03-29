@@ -11,10 +11,10 @@ import { PredictionService } from '../../service/prediction.service';
   styleUrls: ['./detection-upload.component.scss'],
 })
 export class DetectionUploadComponent {
-  @Output() photoUploadedEvent = new EventEmitter<File>();
+  @Output() photoUploadedEvent = new EventEmitter<string>();
 
   imageChangedEvent: any = '';
-  croppedImage: any = '';
+  croppedImage?: any = '';
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
@@ -31,5 +31,7 @@ export class DetectionUploadComponent {
   loadImageFailed() {
     // show message
   }
-  uploadPhoto() {}
+  uploadPhoto() {
+    console.log('Photo upload pressed!' + this.croppedImage);
+  }
 }
