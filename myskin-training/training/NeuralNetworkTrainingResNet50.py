@@ -15,8 +15,8 @@ tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 #===== CONSTANS =====
 #Model
-MODEL_NAME = 'resnet50_conv5_last_block_Trainable_lr1e-6'
-MODEL_ARCHITECTURE_NAME = 'resnet50'
+MODEL_NAME = 'resnet50_lr1e-4_not_augumented'
+MODEL_ARCHITECTURE_NAME = 'resnet50_no_aug'
 TRAINING_STATISTICS_ACCURACY_FILE = './training/stats/network_training_acc.csv'
 TRAINING_STATISTICS_VAL_ACCURACY_FILE = './training/stats/network_training_val_acc.csv'
 TRAINING_STATISTICS_LOSS_FILE = './training/stats/network_training_loss.csv'
@@ -58,27 +58,26 @@ test_index = test_indexes[int(fold)]
 print(f"===== CURRENT FOLD: {fold} =====")
 
 earlyStopping = EarlyStopping(monitor='val_loss',
-                              patience=5,)
+                              patience=15,)
 
 model = Sequential()
 resnet = ResNet50(include_top=False,
-                  input_shape=(200, 200, 3),
-                  weights='imagenet')
-#resnet.trainable = False
+                  input_shape=(128, 128, 3))
+resnet.trainable = True
 
 # Setting last conv block as trainable
-for l in resnet.layers:
-    if 'conv5_block3' in l.name:
-        l.trainable = True
-    else:
-        l.trainable = False
+# for l in resnet.layers:
+#     if 'conv5_block3' in l.name:
+#         l.trainable = True
+#     else:
+#         l.trainable = False
 
 model.add(resnet)
-model.add(AveragePooling2D((7, 7)))
+model.add(AveragePooling2D((4, 4)))
 model.add(Flatten())
 model.add(Dense(7, activation = 'softmax'))
 
-model.compile(optimizer=Adam(learning_rate=1e-6),
+model.compile(optimizer=Adam(learning_rate=1e-4),
               loss=SparseCategoricalCrossentropy(),
               metrics=['accuracy'])
 

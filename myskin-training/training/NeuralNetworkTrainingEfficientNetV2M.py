@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 from utils.TrainingStatisticsUtils import save_training_statistics
 from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.applications import EfficientNetV2M
+from tensorflow.keras.applications import EfficientNetB3
 from tensorflow.keras.layers import Input, Dense, Flatten, AveragePooling2D
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
@@ -15,8 +15,8 @@ tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 # ===== CONSTANS =====
 # Model
-MODEL_NAME = 'EfficientNetV2M_lr1e-6'
-MODEL_ARCHITECTURE_NAME = 'efficientnet_v2'
+MODEL_NAME = 'EfficientNetB3_lr1e-3_not_augumented'
+MODEL_ARCHITECTURE_NAME = 'EfficientNet_no_aug'
 TRAINING_STATISTICS_ACCURACY_FILE = './training/stats/network_training_acc.csv'
 TRAINING_STATISTICS_VAL_ACCURACY_FILE = './training/stats/network_training_val_acc.csv'
 TRAINING_STATISTICS_LOSS_FILE = './training/stats/network_training_loss.csv'
@@ -57,20 +57,19 @@ test_index = test_indexes[int(fold)]
 print(f"===== CURRENT FOLD: {fold} =====")
 
 earlyStopping = EarlyStopping(monitor='val_loss',
-                              patience=10, )
+                              patience=15,)
 
 model = Sequential()
-efficient_net_v2m = EfficientNetV2M(include_top=False,
-                                    input_shape=(200, 200, 3),
-                                    weights='imagenet',
-                                    include_preprocessing=False)
-efficient_net_v2m.trainable = False
+efficient_net_b4 = EfficientNetB3(include_top=False,
+                                  input_shape=(128, 128, 3),
+                                  weights=None,
+                                  pooling='avg')
+efficient_net_b4.trainable = True
 
-model.add(efficient_net_v2m)
-model.add(Flatten())
+model.add(efficient_net_b4)
 model.add(Dense(7, activation='softmax'))
 
-model.compile(optimizer=Adam(learning_rate=1e-6),
+model.compile(optimizer=Adam(learning_rate=1e-3),
               loss=SparseCategoricalCrossentropy(),
               metrics=['accuracy'])
 
