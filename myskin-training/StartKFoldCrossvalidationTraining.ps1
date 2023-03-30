@@ -1,5 +1,5 @@
 #Runs Training on k folds
-$TrainingFileName = "NeuralNetworkTrainingEfficientNetV2M.py"
+$TrainingFileName = "NeuralNetworkTrainingVGG19.py"
 $TrainingScriptPath = "C:\Users\juraj\source\repos\MySkin\myskin-training\training\$TrainingFileName"
 $PythonEnviromentPath = "C:\Users\juraj\source\enviroments\MySkinTraining\Scripts\python.exe"
 

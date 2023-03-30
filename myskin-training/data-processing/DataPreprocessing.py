@@ -1,11 +1,13 @@
 #from tensorflow.keras.applications.resnet50 import preprocess_input
-from tensorflow.keras.applications.efficientnet_v2 import preprocess_input
+#from tensorflow.keras.applications.efficientnet_v2 import preprocess_input
+from tensorflow.keras.applications.vgg19 import preprocess_input
+
 import numpy as np
 
 #===== CONSTANS =====
 FEATURE_FILE = '../resources/features_no_augumentation.npy'
 LABEL_FILE = '../resources/labels_no_augumentation.npy'
-MODEL_NAME = 'EfficientNet_no_aug'
+MODEL_NAME = 'VGG19_no_aug'
 PREPROCESSED_FEATURE_FILE = f'../resources/{MODEL_NAME}_features.npy'
 PREPROCESSED_LABEL_FILE = f'../resources/{MODEL_NAME}_labels.npy'
 
