@@ -2,6 +2,17 @@
   padding-top: 1rem;
 }
 
+.dropzone-image {
+  padding-top: 10px;
+}
+
+.dropzone-image img {
+  border: 5px solid #303030;
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+
 ngx-dropzone {
   background: #303030;
 }

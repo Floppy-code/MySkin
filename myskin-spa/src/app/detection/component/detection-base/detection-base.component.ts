@@ -1,7 +1,6 @@
-import { formatDate } from '@angular/common';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
 import { PredictionResult } from 'src/app/core/model/prediction-result';
+import { PredictionItem } from 'src/app/core/model/predition-item';
 import { PredictionService } from '../../service/prediction.service';
 
 @Component({
@@ -10,19 +9,24 @@ import { PredictionService } from '../../service/prediction.service';
   styleUrls: ['./detection-base.component.scss'],
 })
 export class DetectionBaseComponent {
-  public predictionResult$?: Observable<PredictionResult>;
+  public predictionResult: PredictionResult;
 
   constructor(private predictionService: PredictionService) {
-    this.predictionResult$ = this.predictionService.predictionResult$;
+    this.predictionResult = { prediction_probabilities: [] };
   }
 
-  imageUploadedHandler(file: File): void {
-    console.log('Received image from child component!');
-    this.predictFromImage(file);
-  }
-
-  predictFromImage(file: File): void {
-    console.log('Prediction initiated!');
-    this.predictionService.predict(file);
+  imageUploadedHandler(base64Image: string): void {
+    this.predictionService
+      .predict(base64Image)
+      .subscribe((items: PredictionItem[]) => {
+        this.predictionResult.prediction_probabilities.length = 0;
+        items.forEach((item) => {
+          this.predictionResult.prediction_probabilities.push(item);
+        });
+        this.predictionResult.prediction_probabilities.sort(
+          (item1, item2) => item2.probability - item1.probability
+        );
+      });
+    console.log(this.predictionResult);
   }
 }

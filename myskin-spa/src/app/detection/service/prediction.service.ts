@@ -1,48 +1,35 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { PredictionEncodedFile } from 'src/app/core/model/prediction-encoded-file';
 import { PredictionResult } from 'src/app/core/model/prediction-result';
+import { PredictionItem } from 'src/app/core/model/predition-item';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PredictionService {
-  private backendUrl: string = '127.0.0.1:5000'; //Backend API base URL
-
-  predictionResult$?: Observable<PredictionResult>;
+  private backendUrl: string = 'http://127.0.0.1:8000'; //Backend API base URL
+  private headers: HttpHeaders = new HttpHeaders().set(
+    'Content-Type',
+    'application/json; charset=utf-8'
+  );
 
   constructor(private httpClient: HttpClient) {}
 
-  public predict(image: File): void {
-    //Encode image to Base64.
-    let encodedImage: PredictionEncodedFile = this.encodeFileToBase64(image);
-
-    // //Send image to backend and await response.
-    // return this.httpClient.post<PredictionResult>(
-    //   this.backendUrl + '/predict',
-    //   encodedImage
-    // );
-
-    //Mocked output
-    this.predictionResult$ = of({ confidence: 0.6, type: 'blk' });
-  }
-
-  private encodeFileToBase64(file: File): PredictionEncodedFile {
-    let encoded: PredictionEncodedFile = { Base64EncodedImage: '' };
-    let fileReader: FileReader = new FileReader();
-
-    fileReader.readAsDataURL(file);
-    fileReader.onload = (e) => {
-      encoded.Base64EncodedImage = e.target?.result;
-      console.log('Encoded image:', encoded);
+  public predict(b64Image: string): Observable<PredictionItem[]> {
+    //Send image to backend and await response.
+    const toPredict: PredictionEncodedFile = {
+      b64_encoded_image: b64Image,
     };
+    const b64ImageJson = JSON.stringify(toPredict);
 
-    fileReader.onerror = (e) => {
-      console.error('FileReader error: ', e);
-      return null;
-    };
-
-    return encoded;
+    return this.httpClient.post<PredictionItem[]>(
+      this.backendUrl + '/detection/classify_image',
+      b64ImageJson,
+      {
+        headers: this.headers,
+      }
+    );
   }
 }
