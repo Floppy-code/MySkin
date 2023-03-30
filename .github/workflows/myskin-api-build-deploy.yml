@@ -26,15 +26,13 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-
       - name: Upload artifact for deployment jobs
-        working-directory: ./myskin-api
-        uses: actions/upload-artifact@v2
+        working-directory:
+        uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: |
-            .
+            ./myskin-api
             !venv/
 
   deploy:
