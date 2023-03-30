@@ -33,5 +33,6 @@ export class DetectionUploadComponent {
   }
   uploadPhoto() {
     console.log('Photo upload pressed!' + this.croppedImage);
+    this.photoUploadedEvent.emit(this.croppedImage);
   }
 }

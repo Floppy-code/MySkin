@@ -70,8 +70,8 @@ model.add(vgg19)
 
 model.add(Flatten())
 
-model.add(Dense(4096), activation='relu')
-model.add(Dense(4096), activation='relu')
+model.add(Dense(4096, activation='relu'))
+model.add(Dense(4096, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
 model.compile(optimizer=Adam(learning_rate=1e-7),
