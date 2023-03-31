@@ -1,4 +1,5 @@
+import { PredictionItem } from './predition-item';
+
 export interface PredictionResult {
-  confidence: number;
-  type: string;
+  prediction_probabilities: PredictionItem[];
 }

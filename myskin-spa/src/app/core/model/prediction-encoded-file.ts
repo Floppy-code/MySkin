@@ -1,3 +1,3 @@
 export interface PredictionEncodedFile {
-  Base64EncodedImage?: string | ArrayBuffer | null;
+  b64_encoded_image?: string;
 }

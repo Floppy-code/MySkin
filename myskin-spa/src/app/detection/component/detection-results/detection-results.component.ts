@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
 import { PredictionResult } from 'src/app/core/model/prediction-result';
 
 @Component({
@@ -8,19 +7,9 @@ import { PredictionResult } from 'src/app/core/model/prediction-result';
   styleUrls: ['./detection-results.component.scss'],
 })
 export class DetectionResultsComponent {
-  @Input() predictionResult$?: Observable<PredictionResult>;
+  @Input() PredictionResult?: PredictionResult;
 
-  displayedColumns: string[] = ['Confidence', 'Type'];
-  predictionResultTable?: PredictionResult[];
+  displayedColumns: string[] = ['label-id', 'label-name', 'label-probability'];
 
-  constructor() {
-    this.handlePredictionResult();
-  }
-
-  handlePredictionResult(): void {
-    this.predictionResult$?.subscribe((predictionResult) => {
-      console.log('Prediction results updated!');
-      this.predictionResultTable = [predictionResult];
-    });
-  }
+  constructor() {}
 }
