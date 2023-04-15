@@ -1,14 +1,14 @@
-#from tensorflow.keras.applications.resnet50 import preprocess_input
-from tensorflow.keras.applications.efficientnet import preprocess_input
+from tensorflow.keras.applications.resnet50 import preprocess_input
+#from tensorflow.keras.applications.efficientnet import preprocess_input
 #from tensorflow.keras.applications.vgg19 import preprocess_input
 
 from sklearn.preprocessing import OneHotEncoder
 import numpy as np
 
 #===== CONSTANS =====
-FEATURE_FILE = '../resources/features_no_augumentation.npy'
-LABEL_FILE = '../resources/labels_no_augumentation.npy'
-MODEL_NAME = 'EfficientNet_no_aug'
+FEATURE_FILE = '../resources/features.npy'
+LABEL_FILE = '../resources/labels.npy'
+MODEL_NAME = 'ResNet50_aug'
 PREPROCESSED_FEATURE_FILE = f'../resources/{MODEL_NAME}_features.npy'
 PREPROCESSED_LABEL_FILE = f'../resources/{MODEL_NAME}_labels.npy'
 
