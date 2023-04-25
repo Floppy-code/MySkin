@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PredictionResult } from 'src/app/core/model/prediction-result';
+import { PredictionHistoryService } from '../../service/prediction-history.service';
 
 @Component({
   selector: 'app-detection-results',

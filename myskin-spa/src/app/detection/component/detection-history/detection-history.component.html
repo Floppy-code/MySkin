@@ -1,1 +1,72 @@
-<p>detection-history works!</p>
+<div class="page-title-holder">
+  <div class="page-title">
+    <h1>Detection History</h1>
+  </div>
+</div>
+
+<div class="material-card-holder">
+  <mat-card class="material-card">
+    <mat-card-header>
+      <mat-card-title>Detection Results</mat-card-title>
+      <mat-card-subtitle
+        >Predicted results from last image upload</mat-card-subtitle
+      >
+    </mat-card-header>
+    <mat-divider class="material-card-devider"></mat-divider>
+    <mat-card-content class="table-holder">
+      <div *ngFor="let result of predictionResults" style="padding-top: 1rem">
+        <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>access_time</mat-icon>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ result.prediction_date }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div *ngIf="result!.prediction_result.prediction_probabilities">
+              <table
+                mat-table
+                [dataSource]="
+                  result!.prediction_result.prediction_probabilities
+                "
+                class="mat-elevation-z8 prediction-table"
+              >
+                <!-- Position Column -->
+                <ng-container matColumnDef="label-id">
+                  <th mat-header-cell *matHeaderCellDef>Label ID</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.label_id }}
+                  </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="label-name">
+                  <th mat-header-cell *matHeaderCellDef>Label Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.label_name }}
+                  </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="label-probability">
+                  <th mat-header-cell *matHeaderCellDef>Probability</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.probability }}%
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
