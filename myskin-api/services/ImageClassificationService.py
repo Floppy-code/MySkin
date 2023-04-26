@@ -4,18 +4,18 @@ import base64
 import numpy as np
 from PIL import Image
 from skimage.transform import resize
-from tensorflow.keras.applications.resnet50 import preprocess_input
+from tensorflow import keras
+from tensorflow.keras.applications.vgg19 import preprocess_input
 
 
 class ImageClassificationService():
+    KERAS_MODEL_PATH = 'keras-models/vgg19_lr1e-5_final_Experiment_3/'
     RESIZE_RESOLUTION = (128, 128)
+    LABEL_IDs = [0, 1, 2, 3, 4, 5, 6]
+    LABEL_NAMES = ['akiec', 'bcc', 'bkl', 'df', 'mel', 'nv', 'vasc']
 
     def __init__(self):
-        self.MODEL_PATH = '.'
-
-    def initialize_neural_network(self):
-        # MOCKED
-        pass
+        self.model = keras.models.load_model(self.KERAS_MODEL_PATH)
 
     def preprocess_image(self, numpy_image):
         print("[INFO] Preprocessing started.")
@@ -33,16 +33,12 @@ class ImageClassificationService():
         print("[INFO] Classifying started.")
         image = self.base64_to_numpy(b64_encoded_image)
         image = self.preprocess_image(image)
-        print(image.shape)
-        # Do classification here
-        pass
+        image = np.expand_dims(image, axis=0)
 
-        # MOCKED return
-        mock_response = []
-        mock_response.append(ClassificationResponse(label_id=1, label_name='name1', probability=1.4))
-        mock_response.append(ClassificationResponse(label_id=2, label_name='name2', probability=20.7))
-        mock_response.append(ClassificationResponse(label_id=3, label_name='name3', probability=35.84))
-        mock_response.append(ClassificationResponse(label_id=4, label_name='name4', probability=0.44))
-        mock_response.append(ClassificationResponse(label_id=5, label_name='name5', probability=12.85))
+        prediction = self.model.predict(image)
 
-        return mock_response
+        response = []
+        for i in range(0, 7):
+            response.append(ClassificationResponse(label_id=self.LABEL_IDs[i], label_name=self.LABEL_NAMES[i], probability=prediction[0][i]))
+
+        return response

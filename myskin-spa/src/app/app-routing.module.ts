@@ -9,7 +9,7 @@ import { DetectionHistoryComponent } from './detection/component/detection-histo
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'detection', component: DetectionBaseComponent },
-  { path: 'detection/history', component: DetectionHistoryComponent },
+  { path: 'history', component: DetectionHistoryComponent },
   { path: 'admin', component: AdminBaseComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

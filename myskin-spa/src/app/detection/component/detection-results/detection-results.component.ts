@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PredictionResult } from 'src/app/core/model/prediction-result';
+import { CategoryDescriptionService } from '../../service/category-description.service';
 
 @Component({
   selector: 'app-detection-results',
@@ -11,5 +12,11 @@ export class DetectionResultsComponent {
 
   displayedColumns: string[] = ['label-id', 'label-name', 'label-probability'];
 
-  constructor() {}
+  constructor(public descriptionService: CategoryDescriptionService) {}
+
+  public GetCategoryDescription(): string {
+    var category =
+      this.PredictionResult?.prediction_probabilities[0].label_name;
+    return this.descriptionService.GetCategoryDescription(category!);
+  }
 }
