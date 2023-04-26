@@ -9,6 +9,9 @@
     <mat-divider class="material-card-devider"></mat-divider>
     <mat-card-content class="table-holder">
       <div *ngIf="PredictionResult!.prediction_probabilities.length != 0">
+        <p style="padding: 0 1rem 0.5rem 1rem">
+          {{ GetCategoryDescription() }}
+        </p>
         <table
           mat-table
           [dataSource]="PredictionResult!.prediction_probabilities"

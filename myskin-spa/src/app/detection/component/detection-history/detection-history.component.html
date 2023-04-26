@@ -26,6 +26,14 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
             <div *ngIf="result!.prediction_result.prediction_probabilities">
+              <p style="padding: 0 1rem 0.5rem 1rem">
+                {{
+                  GetCategoryDescription(
+                    result!.prediction_result.prediction_probabilities[0]
+                      .label_name
+                  )
+                }}
+              </p>
               <table
                 mat-table
                 [dataSource]="
