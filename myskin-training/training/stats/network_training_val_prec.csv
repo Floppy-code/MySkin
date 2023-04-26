@@ -310,3 +310,8 @@ EfficientNetB3_lr1e-3_final fold_1;0.8351341627461082
 EfficientNetB3_lr1e-3_final fold_2;0.7950104312028997
 EfficientNetB3_lr1e-3_final fold_3;0.7096173155393511
 EfficientNetB3_lr1e-3_final fold_4;0.6984395850127554
+vgg19_lr1e-5_final_Experiment_3 fold_0;0.9320038295917658
+vgg19_lr1e-5_final_Experiment_3 fold_1;0.936010495824963
+vgg19_lr1e-5_final_Experiment_3 fold_2;0.9187594456584776
+vgg19_lr1e-5_final_Experiment_3 fold_3;0.6521796747638386
+vgg19_lr1e-5_final_Experiment_3 fold_4;0.8414928310712774

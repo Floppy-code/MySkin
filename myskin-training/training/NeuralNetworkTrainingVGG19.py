@@ -47,14 +47,6 @@ class_weights = class_weight.compute_class_weight(class_weight="balanced",
                                                   classes=np.unique(y_integers),
                                                   y=y_integers)
 class_weights = dict(enumerate(class_weights))
-print(class_weights)
-print((y_integers == 0).sum())
-print((y_integers == 1).sum())
-print((y_integers == 2).sum())
-print((y_integers == 3).sum())
-print((y_integers == 4).sum())
-print((y_integers == 5).sum())
-print((y_integers == 6).sum())
 
 # Split into 5 folds evenly
 skf = StratifiedKFold(n_splits=5, random_state=None, shuffle=False)
