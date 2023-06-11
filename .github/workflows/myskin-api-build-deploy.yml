@@ -66,3 +66,6 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.MYSKIN_API_AZURE_WEBAPP_PUBLISH_PROFILE }}
+      - name: Run Backend
+        run: ${{ env.API_DIRECTORY }}/startup.sh
+        shell: bash
