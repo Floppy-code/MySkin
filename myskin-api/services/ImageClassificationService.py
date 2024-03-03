@@ -4,7 +4,7 @@ import base64
 import numpy as np
 from PIL import Image
 from skimage.transform import resize
-from tensorflow import keras
+import tensorflow as tf
 from tensorflow.keras.applications.vgg19 import preprocess_input
 
 
@@ -15,7 +15,7 @@ class ImageClassificationService():
     LABEL_NAMES = ['akiec', 'bcc', 'bkl', 'df', 'mel', 'nv', 'vasc']
 
     def __init__(self):
-        self.model = keras.models.load_model(self.KERAS_MODEL_PATH)
+        self.model = tf.saved_model.load(self.KERAS_MODEL_PATH)
 
     def preprocess_image(self, numpy_image):
         print("[INFO] Preprocessing started.")
