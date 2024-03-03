@@ -4,3 +4,5 @@ numpy
 tensorflow==2.10
 pydantic
 gunicorn
+pillow
+scikit-image
