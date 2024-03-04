@@ -1,5 +1,5 @@
 fastapi
-uvicorn[standard]
+uvicorn
 numpy
 tensorflow==2.10
 pydantic
