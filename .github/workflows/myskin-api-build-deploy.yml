@@ -41,7 +41,7 @@ jobs:
         with:
           name: python-app
           path: |
-            ./myskin-api/release.zip
+            ./release.zip
             !./myskin-api/venv/
 
   deploy:
