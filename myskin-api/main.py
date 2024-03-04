@@ -1,3 +1,4 @@
+import uvicorn
 from typing import Union
 from fastapi import FastAPI
 from typing import List
@@ -38,3 +39,9 @@ async def post_classify_image(request: ClassificationRequest):
 @app.post('/detection/bounding_boxes')
 async def post_get_bounding_boxes(request: ClassificationRequest):
     return {'NOT IMPLEMENTED YET!'}
+
+def run():
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info", workers=4, loop="uvloop")
+
+if __name__ == "__main__":
+    run()
