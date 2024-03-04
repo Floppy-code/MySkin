@@ -1,8 +1,8 @@
-name: Build and deploy Python app to Azure Web App
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-env:
-  PYTHON_VERSION: "3.10" # set this to the Python version to use
-  API_DIRECTORY: "./myskin-api"
+name: Build and deploy Python app to Azure Web App - myskin-api
 
 on:
   push:
@@ -14,6 +14,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./myskin-api
 
     steps:
       - uses: actions/checkout@v4
@@ -21,8 +24,7 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v1
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: "pip"
+          python-version: '3.10'
 
       - name: Create and start virtual environment
         run: |
@@ -30,12 +32,12 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: pip install -r ${{ env.API_DIRECTORY }}/requirements.txt
+        run: pip install -r requirements.txt
 
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
-        run: zip release.zip ${{ env.API_DIRECTORY }} -r
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
@@ -43,7 +45,7 @@ jobs:
           name: python-app
           path: |
             release.zip
-            venv/
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -63,12 +65,13 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FFFA02C88D754FF181761B5CA1EB52A5 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_14BDD7E45D8140FCA9BC48C8B10C21F2 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_31CF653F9C7248A8A9CD591638F9F2C0 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_241DC6E9BABF46199F2C73E34C56B934 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6FF254E1AE1A4325A1B762E615747D7D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_58202198A0A4463683EB5A8B01F6CFED }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
@@ -76,3 +79,4 @@ jobs:
         with:
           app-name: 'myskin-api'
           slot-name: 'Production'
+          
