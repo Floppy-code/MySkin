@@ -37,12 +37,17 @@ jobs:
         working-directory: ./myskin-api
         run: zip release.zip ./* -r
 
+      - name: Zip CNN for deployment
+        working-directory: ./myskin-api/keras-models/vgg19_lr1e-5_final_Experiment_3
+        run: zip ../../detection_cnn.zip ./* -r
+
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: |
             ./myskin-api/release.zip
+            ./myskin-api/detection_cnn.zip
             !venv/
 
   deploy:
@@ -62,6 +67,9 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
+
+      - name: Unzip cnn for deployment
+        run: unzip release.zip ./keras-models/vgg19_lr1e-5_final_Experiment_3
 
 
       - name: Login to Azure
