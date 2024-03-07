@@ -1,7 +1,5 @@
 FROM python:3.10-slim
 
-EXPOSE 5000
-
 # Keeps Python from generating .pyc files in the container.
 ENV PYTHONDONTWRITEBYTECODE=1
 
@@ -15,9 +13,13 @@ RUN python -m pip install -r requirements.txt
 WORKDIR .
 COPY . /app
 
+EXPOSE 8000
+
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder.
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 USER appuser
 
 # Provides defaults for an executing container; can be overridden with Docker CLI.
+WORKDIR /app
+CMD ["ls"]
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "main:app"]
