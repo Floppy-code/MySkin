@@ -9,7 +9,7 @@ import { PredictionItem } from 'src/app/core/model/predition-item';
   providedIn: 'root',
 })
 export class PredictionService {
-  private backendUrl: string = 'http://127.0.0.1:8000'; //Backend API base URL
+  private backendUrl: string = 'https://myskin-api.azurewebsites.net/'; //Backend API base URL
   private headers: HttpHeaders = new HttpHeaders().set(
     'Content-Type',
     'application/json; charset=utf-8'

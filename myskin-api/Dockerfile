@@ -1,11 +1,8 @@
 FROM python:3.10-slim
 
-# Keeps Python from generating .pyc files in the container.
 ENV PYTHONDONTWRITEBYTECODE=1
-# Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
-# Install pip requirements.
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 
@@ -17,8 +14,6 @@ USER appuser
 
 WORKDIR /app
 
-
 EXPOSE 8000
-CMD ["ls"]
 # Provides defaults for an executing container; can be overridden with Docker CLI.
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "main:app"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "600", "main:app"]
