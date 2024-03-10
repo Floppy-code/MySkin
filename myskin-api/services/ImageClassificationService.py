@@ -7,6 +7,19 @@ from skimage.transform import resize
 import tensorflow as tf
 from tensorflow.keras.applications.vgg19 import preprocess_input
 
+# Wrapper added so we can load Keras models saved using no longer compatible version of protobuf
+class CustomModelLayer(tf.keras.layers.Layer):
+    def __init__(self, model, **kwargs):
+        super(CustomModelLayer, self).__init__(**kwargs)
+        self.model = model
+
+    def build(self, input_shape):
+        # Explicitly create variables using add_weight
+        self._trainable_weights.extend(self.model.trainable_variables)
+
+    def call(self, inputs, **kwargs):
+        return self.model(inputs)
+
 
 class ImageClassificationService():
     KERAS_MODEL_PATH = 'keras-models/vgg19_lr1e-5_final_Experiment_3/'
@@ -15,7 +28,15 @@ class ImageClassificationService():
     LABEL_NAMES = ['akiec', 'bcc', 'bkl', 'df', 'mel', 'nv', 'vasc']
 
     def __init__(self):
-        self.model = tf.saved_model.load(self.KERAS_MODEL_PATH)
+        self.load_model()
+
+    def load_model(self):
+        tf_model = tf.saved_model.load(self.KERAS_MODEL_PATH)
+
+        input_layer = tf.keras.layers.Input(shape=(128, 128, 3))
+        output_layer = CustomModelLayer(tf_model)(input_layer)
+
+        self.model = tf.keras.Model(inputs=input_layer, outputs=output_layer)
 
     def preprocess_image(self, numpy_image):
         print("[INFO] Preprocessing started.")
