@@ -25,6 +25,10 @@ app.add_middleware(
 
 
 # ===== ENDPOINTS =====
+@app.get('/')
+async def get_root():
+    return {"Application": "MySkin"}
+
 @app.get('/health')
 async def get_health():
     return {"Status": "Healthy"}
